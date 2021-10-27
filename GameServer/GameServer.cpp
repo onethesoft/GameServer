@@ -3,18 +3,49 @@
 #include "pch.h"
 #include <iostream>
 
+#include <thread>
+
+void HelloThread()
+{
+    cout << "Hello Ah" << endl;
+}
+void HelloThread_2(int32 num)
+{
+    cout << num << endl;
+}
 int main()
 {
-    HelloWorld();
+    vector<std::thread> ThreadList;
+    for (int i = 0; i < 12; i++)
+    {
+        ThreadList.push_back(std::thread(HelloThread_2, i));
+    }
+    for (int i = 0; i < 12; i++)
+    {
+        if (ThreadList[i].joinable())
+            ThreadList[i].join();
+    }
+    /*
+
+    std::thread t;
+
+    auto id1 = t.get_id(); // 쓰레드가 할당되지 않았으므로 0 을 return
+
+    t = std::thread(HelloThread);
+    std::thread(HelloThread_2, 10);
+    
+    int32 count = t.hardware_concurrency();// CPU 코어 개수의 정보를 추출
+
+    auto id = t.get_id();  // 쓰레드 ID 를 return
+    //t.detach(); // std::thread 객체에서 실제 쓰레드를 분리 ( 리눅스의 Demon Process )
+
+    if (t.joinable()) // thread 변수 t 에 실제 스레드가 할당되어 있는지를 Check 
+        t.join();  // Main Thread 가 t Thread 가 끝날때까지 대기한다.
+        */
+
+    cout << "Hello main" << endl;
+
+     
+    
 }
 
-// 프로그램 실행: <Ctrl+F5> 또는 [디버그] > [디버깅하지 않고 시작] 메뉴
-// 프로그램 디버그: <F5> 키 또는 [디버그] > [디버깅 시작] 메뉴
-
-// 시작을 위한 팁: 
-//   1. [솔루션 탐색기] 창을 사용하여 파일을 추가/관리합니다.
-//   2. [팀 탐색기] 창을 사용하여 소스 제어에 연결합니다.
-//   3. [출력] 창을 사용하여 빌드 출력 및 기타 메시지를 확인합니다.
-//   4. [오류 목록] 창을 사용하여 오류를 봅니다.
-//   5. [프로젝트] > [새 항목 추가]로 이동하여 새 코드 파일을 만들거나, [프로젝트] > [기존 항목 추가]로 이동하여 기존 코드 파일을 프로젝트에 추가합니다.
-//   6. 나중에 이 프로젝트를 다시 열려면 [파일] > [열기] > [프로젝트]로 이동하고 .sln 파일을 선택합니다.
